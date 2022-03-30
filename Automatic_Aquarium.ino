@@ -9,7 +9,7 @@ OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensors(&oneWire);
 float Celcius = 0;
 
-// Stepper motor
+// Fish feeder  \ Stepper motor 
 #define stepsPerRevolution 2048
 Stepper myStepper(stepsPerRevolution, 8,9,10,11);
 
