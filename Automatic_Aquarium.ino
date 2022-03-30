@@ -13,6 +13,9 @@ float Celcius = 0;
 #define stepsPerRevolution 2048
 Stepper myStepper(stepsPerRevolution, 8,9,10,11);
 
+// Air pump
+#define AirRelay 1
+bool airPumpIsOn;
 
 void setup() 
 {
@@ -23,6 +26,9 @@ void setup()
   digitalWrite(11,LOW);
   Serial.begin(9600);
   sensors.begin();
+  // Air pump
+  digitalWrite(AirRelay,LOW);
+  airPumpIsOn = false ;
 
 }
 
@@ -31,6 +37,7 @@ void loop()
   
   getTemperature();
   feedFish();
+  oxygenPump();
 
 }
 
@@ -50,4 +57,18 @@ void getTemperature()  // To get tempereature of the aquarium
   Serial.print(" C  ");
   Serial.print(Celcius);
   return Celcius;
+}
+
+void oxygenPump() // To Start/Stop air pump
+{
+  if (!airPumpIsOn)
+    {
+      digitalWrite(AirRelay,HIGH);
+      airPumpIsOn = true;
+    }
+  else 
+    {
+      digitalWrite(AirRelay,LOW);
+      airPumpIsOn = false; 
+    }
 }
