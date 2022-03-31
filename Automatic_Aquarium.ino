@@ -17,6 +17,10 @@ Stepper myStepper(stepsPerRevolution, 8,9,10,11);
 #define AirRelay 1
 bool airPumpIsOn;
 
+// Water In pump
+#define WaterInRelay 2
+bool waterPumpInIsOn;
+
 void setup() 
 {
   myStepper.setSpeed(10);
@@ -26,9 +30,14 @@ void setup()
   digitalWrite(11,LOW);
   Serial.begin(9600);
   sensors.begin();
+  
   // Air pump
   digitalWrite(AirRelay,LOW);
   airPumpIsOn = false ;
+  
+    // Water In pump
+  digitalWrite(WaterInRelay,LOW);
+  waterPumpInIsOn  = false; 
 
 }
 
@@ -38,6 +47,7 @@ void loop()
   getTemperature();
   feedFish();
   oxygenPump();
+  waterPumpIn();
 
 }
 
@@ -70,5 +80,19 @@ void oxygenPump() // To Start/Stop air pump
     {
       digitalWrite(AirRelay,LOW);
       airPumpIsOn = false; 
+    }
+}
+
+void waterPumpIn() // To To Start/Stop Water in pump
+{
+  if (!waterPumpInIsOn)
+    {
+       digitalWrite(WaterInRelay,HIGH);
+       waterPumpInIsOn = true;
+    }
+  else 
+    {
+     digitalWrite(WaterInRelay,LOW);
+     waterPumpInIsOn = false;
     }
 }
