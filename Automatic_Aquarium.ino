@@ -2,6 +2,7 @@
 #include <DallasTemperature.h>
 #include <Stepper.h>
 
+//used pins 5 8 9 10 11 1 2 3
 
 // Temperature sensor
 #define ONE_WIRE_BUS 5
@@ -9,7 +10,7 @@ OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensors(&oneWire);
 float Celcius = 0;
 
-// Fish feeder  \ Stepper motor 
+// Stepper motor \ Fish feeder
 #define stepsPerRevolution 2048
 Stepper myStepper(stepsPerRevolution, 8,9,10,11);
 
@@ -21,23 +22,35 @@ bool airPumpIsOn;
 #define WaterInRelay 2
 bool waterPumpInIsOn;
 
+// Water Out pump
+#define WaterOutRelay 3
+bool waterPumpOutIsOn;
+
 void setup() 
 {
+  
+  Serial.begin(9600);
+  sensors.begin();
+  
+  // Stepper motor
   myStepper.setSpeed(10);
   digitalWrite(8,LOW);  
   digitalWrite(9,LOW);
   digitalWrite(10,LOW);
   digitalWrite(11,LOW);
-  Serial.begin(9600);
-  sensors.begin();
-  
+
   // Air pump
   digitalWrite(AirRelay,LOW);
   airPumpIsOn = false ;
-  
-    // Water In pump
+
+  // Water In pump
   digitalWrite(WaterInRelay,LOW);
   waterPumpInIsOn  = false; 
+  
+  // Water Out pump
+  digitalWrite(WaterOutRelay,LOW);
+  waterPumpOutIsOn = false;
+
 
 }
 
@@ -48,6 +61,7 @@ void loop()
   feedFish();
   oxygenPump();
   waterPumpIn();
+  waterPumpOut();
 
 }
 
@@ -94,5 +108,19 @@ void waterPumpIn() // To To Start/Stop Water in pump
     {
      digitalWrite(WaterInRelay,LOW);
      waterPumpInIsOn = false;
+    }
+}
+
+void waterPumpOut() // To To Start/Stop Water out pump
+{
+  if (!waterPumpOutIsOn)
+    {
+      digitalWrite(WaterOutRelay,HIGH);
+      waterPumpOutIsOn = true;
+    }
+  else 
+    {
+     digitalWrite(WaterOutRelay,LOW);
+     waterPumpOutIsOn = false;
     }
 }
