@@ -9,6 +9,7 @@
 OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensors(&oneWire);
 float Celcius = 0;
+float currenttemp = 0;
 
 // Stepper motor \ Fish feeder
 #define stepsPerRevolution 2048
@@ -65,7 +66,11 @@ void setup()
 void loop() 
 {
   
-  getTemperature();
+  currenttemp = getTemperature();
+  if (currenttemp < 20)
+    waterwarmer():
+  else ()
+    
   feedFish();
   oxygenPump();
   waterPumpIn();
