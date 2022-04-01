@@ -54,6 +54,10 @@ void setup()
   // Water Out pump
   digitalWrite(WaterOutRelay,LOW);
   waterPumpOutIsOn = false;
+  
+  // waterWarmer
+  digitalWrite(WaterWarmerRelay,LOW);
+  WaterWarmerIsOn = false;
 
 
 }
@@ -66,6 +70,7 @@ void loop()
   oxygenPump();
   waterPumpIn();
   waterPumpOut();
+  waterwarmer();
 
 }
 
@@ -126,5 +131,21 @@ void waterPumpOut() // To To Start/Stop Water out pump
     {
      digitalWrite(WaterOutRelay,LOW);
      waterPumpOutIsOn = false;
+    }
+}
+
+
+
+void waterwarmer() // To To Start/Stop Water out pump
+{
+  if (!WaterWarmerIsOn)
+    {
+      digitalWrite(WaterWarmerRelay,HIGH);
+      WaterWarmerIsOn = true;
+    }
+  else 
+    {
+     digitalWrite(WaterWarmerRelay,LOW);
+     WaterWarmerIsOn = false;
     }
 }
