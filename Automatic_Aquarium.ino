@@ -26,6 +26,10 @@ bool waterPumpInIsOn;
 #define WaterOutRelay 3
 bool waterPumpOutIsOn;
 
+// waterWarmer
+#define WaterWarmerRelay 4
+bool WaterWarmerIsOn;
+
 void setup() 
 {
   
